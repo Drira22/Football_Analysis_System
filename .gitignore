@@ -1,0 +1,11 @@
+.venv/
+models/
+output_videos/
+runs/
+training/yolo11n.pt
+training/yolov5lu.pt
+training/yolov5mu.pt
+training/runs
+training/football-players-detection-1
+yolov8m.pt
+yolov8n.pt
