@@ -4,6 +4,7 @@ import pickle
 import os 
 import cv2
 import numpy as np
+import pandas as pd 
 #in order to use functions we defined in utils we need to get back one step behind in the racine thenimport the functions 
 import sys
 sys.path.append('../')
@@ -14,7 +15,18 @@ class Tracker:
         self.model=YOLO(model_path)
         self.tracker = sv.ByteTrack()
 
-    
+    def interpolate_ball_positions(self,ball_positions):
+        ball_positions = [x.get(1,{}).get('bbox',[]) for x in ball_positions]
+        df_ball_positions = pd.DataFrame(ball_positions,columns=['x1','y1','x2','y2'])
+        
+        #interpolate missing values
+        df_ball_positions = df_ball_positions.interpolate()
+        df_ball_positions = df_ball_positions.bfill() #bfill is for the first second frames who doesn't have back history to track and interpolate
+
+        ball_positions= [{1:{"bbox":x}} for x in df_ball_positions.to_numpy().tolist()]
+        return ball_positions
+
+
     def detect_frames(self,frames):
         
         batch_size=20 
@@ -27,7 +39,6 @@ class Tracker:
         
         return detections
     
-
 
     def get_object_tracks(self,frames,read_from_stub=False, stub_path=None):
 
@@ -147,6 +158,7 @@ class Tracker:
             )
         
         return frame
+
 
     def draw_triangle(self,frame,bbox,color):
         y=int(bbox[1])
