@@ -17,3 +17,6 @@ def save_video(output_video_frame,output_video_path):
     for frame in output_video_frame:
         out.write(frame)
     out.release() 
+
+def measure_xy_distance(p1,p2):
+    return p1[0]-p2[0],p1[1]-p2[1]
