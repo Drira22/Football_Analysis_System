@@ -2,6 +2,9 @@
 models/
 output_videos/
 runs/
+stubs/*
+input/final.mp4
+input/08fd33_4.mp4
 training/yolo11n.pt
 training/yolov5lu.pt
 training/yolov5mu.pt

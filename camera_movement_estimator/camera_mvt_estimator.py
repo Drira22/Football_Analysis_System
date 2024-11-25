@@ -21,7 +21,7 @@ class CameraMovementEstimator():
             blockSize=7,
             mask=mask_features
         )
-
+        
 
         self.lk_params=dict(
             winSize=(15, 15),        
